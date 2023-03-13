@@ -44,8 +44,20 @@ export class EmployeeService {
     }
   }
 
+  async getEmployeeByEmail(email: string) {
+    try {
+      const employee = await this._repo.getByEmail(email);
+      if (employee) {
+        throw new Error("Employee with same email address already exists.");
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
   async add(employee: Employee) {
     try {
+      await this.getEmployeeByEmail(employee.email);
       const supervisor =
         employee && employee.supervisorId
           ? await this.get(employee.supervisorId)
@@ -64,7 +76,7 @@ export class EmployeeService {
   }
   async update(employee: Employee) {
     try {
-        const supervisor =
+      const supervisor =
         employee && employee.supervisorId
           ? await this.get(employee.supervisorId)
           : null;

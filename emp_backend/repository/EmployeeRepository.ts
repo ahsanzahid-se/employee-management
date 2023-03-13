@@ -12,6 +12,10 @@ export class EmployeeRepository {
   get(id: string) {
     return this.db.get(id);
   }
+  
+  getByEmail(email: string) {
+    return this.db.getByEmail(email);
+  }
   add(employee: Employee) {
     return this.db.add(employee);
   }

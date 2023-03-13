@@ -1,8 +1,7 @@
-import { Employee } from "../interfaces/Employee";
 import { Database } from "../interfaces/FileDatabase";
 import * as fs from "fs";
 
-export class FileStorage<T extends { id: string }> implements Database<T> {
+export class FileStorage<T extends { id: string, email: string }> implements Database<T> {
   private employees: T[] = [];
   private readonly filename: string;
 
@@ -26,12 +25,23 @@ export class FileStorage<T extends { id: string }> implements Database<T> {
 
   get(id: string): Promise<T | null> {
     return new Promise((resolve, reject) => {
-      const employee = this.employees.find((user) => user.id === id);
+      const employee = this.employees.find((employee) => employee.id === id);
       if (employee) {
         resolve(employee);
         return;
       }
-      reject(null);
+      resolve(null);
+    });
+  }
+  
+  getByEmail(email: string): Promise<T | null> {
+    return new Promise((resolve, reject) => {
+      const employee = this.employees.find((employee) => employee.email === email);
+      if (employee) {
+        resolve(employee);
+        return;
+      }
+      resolve(null);
     });
   }
 
@@ -44,15 +54,14 @@ export class FileStorage<T extends { id: string }> implements Database<T> {
         (employee) => employee.id === emp.id
       );
 
-      console.log("iiiiiiiiiiii , i", index, emp, this.employees);
       if (index === -1) {
-        throw new Error("No user found with this id");
+        throw new Error("No employee found with this id");
       }
-      const user = { ...this.employees[index], ...emp };
-      this.employees[index] = user;
+      const employee = { ...this.employees[index], ...emp };
+      this.employees[index] = employee;
       this.save();
 
-      return new Promise((resolve) => resolve(user));
+      return new Promise((resolve) => resolve(employee));
     } catch (err) {
       throw err;
     }
@@ -60,7 +69,7 @@ export class FileStorage<T extends { id: string }> implements Database<T> {
 
   delete(id: string): Promise<string> {
     try {
-      this.employees = this.employees.filter((user) => user.id !== id);
+      this.employees = this.employees.filter((employee) => employee.id !== id);
       this.save();
 
       return new Promise((resolve) => {
@@ -72,7 +81,6 @@ export class FileStorage<T extends { id: string }> implements Database<T> {
   }
   private load() {
     try {
-      console.log("LLLLLLLLLLLLLLLLLLLLLLL ", this.filename);
       const data = fs.readFileSync(this.filename, "utf-8");
       const result = JSON.parse(data);
 
@@ -83,7 +91,6 @@ export class FileStorage<T extends { id: string }> implements Database<T> {
       if (error.code !== "ENOENT") {
         throw error;
       }
-      console.log("LLLLLLLLLLLLLLLLLLLLLLL ", this.filename);
       console.log("error rr", error);
       throw new Error(`Cannot load data ${this.filename} ${error.message}`);
     }
@@ -94,7 +101,6 @@ export class FileStorage<T extends { id: string }> implements Database<T> {
     try {
       fs.writeFileSync(this.filename, data);
     } catch (err) {
-      console.log("e ", err);
       throw new Error("Internal server error: Data cannot be saved");
     }
   }

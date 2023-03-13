@@ -9,19 +9,11 @@ describe("JsonDatabase", () => {
   const db = new FileStorage<Employee>(TEST_FILE);
 
   const repo = new EmployeeRepository(db);
-  //   let db: FileStorage<Employee>;
-
-  //   beforeEach(() => {
-  // Create a new instance of the database before each test
-  //     db = new FileStorage(TEST_FILE);
-  //   });
 
   afterEach(() => {
-    // Delete the test database file after each test
     try {
       fs.unlinkSync(TEST_FILE);
     } catch (error: any) {
-      // Ignore error if the file doesn't exist
       if (error && error.code !== "ENOENT") {
         console.error(
           `Error while deleting test database file ${TEST_FILE}: ${error}`

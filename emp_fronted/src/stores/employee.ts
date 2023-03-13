@@ -138,9 +138,9 @@ export const useEmployeeStore = defineStore({
           this.$router.push("/");
         }
         message.success("Employee added successfully.", 5);
-      } catch (err) {
-        console.log("eee ", err);
-        message.warning("Error while uploading Employee!", 5);
+      } catch (err: any) {
+        let errMessage = err && err.message ? err.message : "Error while uploading Employee!"
+        message.error(errMessage, 5);
       }
     },
     async updateEmployee(employee: iEmployee) {

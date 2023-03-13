@@ -1,16 +1,11 @@
 import dotenv from "dotenv";
 import aws from "aws-sdk";
+import { IS3Config } from "../interfaces/S3";
+import { StorageBucket } from "../interfaces/StorageBucket";
 
 dotenv.config();
 
-interface IS3Config {
-  accessKeyId: string;
-  secretAccessKey: string;
-  signatureVersion: string;
-  region: string
-}
-
-export class S3Service {
+export class S3Service implements StorageBucket<string> {
   private readonly s3;
   private readonly config;
   private readonly bucketName;
@@ -18,7 +13,7 @@ export class S3Service {
   constructor(config: IS3Config, bucketName: string) {
     this.s3 = new aws.S3(config);
     this.config = config;
-    this.bucketName = bucketName
+    this.bucketName = bucketName;
   }
 
   async getUploadURL(id: string) {
@@ -26,34 +21,30 @@ export class S3Service {
       Bucket: this.bucketName,
       Key: id,
       Expires: 100000,
-      // ACL:  'public-read',
-      // region: "region=us-east-2",
-      // ContentType:"image/png",
-      // ACL: 'public-read'
     };
+    try{
+      const uploadURL = this.s3.getSignedUrlPromise("putObject", params);
+  
+      return uploadURL;
 
-    const uploadURL = this.s3.getSignedUrlPromise("putObject", params);
-
-    return uploadURL;
+    }
+    catch(err){
+      throw new Error("Error while getting image url")
+    }
   }
-  // async uploadImage(key, ){
-  //   this.s3.upload()
-  // }
+
   async getImageURL(id: string) {
     const params = {
       Bucket: this.bucketName,
       Key: id,
       Expires: 10000,
-      // ResponseContentType: 'image/png',
-      // ACL: 'public-read'
     };
-    try{
+    try {
       const uploadURL = this.s3.getSignedUrlPromise("getObject", params);
-  
+
       return uploadURL;
-    }
-    catch (e){
-      console.log('e', e)
+    } catch (e) {
+      throw new Error("error while uploading image");
     }
   }
 }

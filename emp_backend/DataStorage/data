@@ -1,77 +1,20 @@
 {
   "employees": [
     {
-      "id": "0dcd3ea9-51c5-4733-9119-af63e27701a2",
-      "firstName": "new",
-      "middleName": "new",
-      "lastName": "enw",
-      "email": "new@new.co",
-      "phoneNumber": "new",
+      "id": "c97e624b-4e62-4b6f-88e4-4ec001f80258",
+      "firstName": "test",
+      "middleName": "test",
+      "lastName": "test",
+      "email": "test@test.com",
+      "phoneNumber": "12354367",
       "address": {
-        "line1": "new",
-        "line2": "new",
-        "city": "new",
-        "zip": "new",
-        "country": "enw"
+        "line1": "line1 ",
+        "line2": "",
+        "city": "test",
+        "zip": "123234",
+        "country": "test"
       },
-      "birthdate": "new",
-      "profilePicture": null,
-      "supervisor": null,
-      "supervisorId": null
-    },
-    {
-      "id": "a8eb875e-157d-4678-908b-20ebfb12c5ab",
-      "firstName": "asdkjhl",
-      "middleName": "sdlkjf",
-      "lastName": "sdafkjh",
-      "email": "sadkjf@ocmasdcoim.co",
-      "phoneNumber": "lsdhf",
-      "address": {
-        "line1": "asdkjfl",
-        "line2": "asdkfhl",
-        "city": "sdakjfl",
-        "zip": "asdffas",
-        "country": "hgjgjh"
-      },
-      "birthdate": "ldksfh@csadc.com",
-      "profilePicture": null,
-      "supervisor": null,
-      "supervisorId": null
-    },
-    {
-      "id": "3cdafdd4-f955-47f0-8c23-ed216d667d6f",
-      "firstName": "nnnn",
-      "middleName": "nnnn",
-      "lastName": "nnnn",
-      "email": "nnn@nnn.co",
-      "phoneNumber": "sdfaas324e",
-      "address": {
-        "line1": "3242ew4dsf",
-        "line2": "sdafsd",
-        "city": "sdfsdaf",
-        "zip": "sdfasdaf",
-        "country": "sdfafds"
-      },
-      "birthdate": "nnnn",
-      "profilePicture": null,
-      "supervisor": null,
-      "supervisorId": null
-    },
-    {
-      "id": "76bd2e6a-b73a-4ae2-a007-8621332fbb27",
-      "firstName": "pic",
-      "middleName": "pic",
-      "lastName": "pic",
-      "email": "pic@pic.co",
-      "phoneNumber": "oiuc",
-      "address": {
-        "line1": "sdaiuf",
-        "line2": "lhksdf",
-        "city": "qlhjdfs",
-        "zip": "lkjhdsa",
-        "country": "lkjhsfa"
-      },
-      "birthdate": "pic",
+      "birthdate": "2023/03/13",
       "profilePicture": "image",
       "supervisor": null,
       "supervisorId": null
